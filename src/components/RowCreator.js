@@ -10,8 +10,7 @@ const RowCreator = props => {
         key={coordinate}
         row={props.row}
         col={i}
-        heroXCoord={props.heroXCoord}
-        heroYCoord={props.heroYCoord}
+        heroCoord={props.heroCoord}
         heroSprite={props.heroSprite}
         obstacles={props.obstacles}
       />

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
 import './App.css';
-import Hero from '../components/Hero';
 import RowCreator from '../components/RowCreator';
-import Obstacle from '../components/Obstacle';
 import GameOver from '../components/GameOver';
 
 class App extends Component {
@@ -13,8 +10,10 @@ class App extends Component {
     this.state = {
       gridCols: 12,
       gridRows: 12,
-      heroXCoord: 6,
-      heroYCoord: 6,  // starting y coordinate
+      heroCoord: { // starting coordinate
+        x: 6,
+        y: 6
+      },
       lastMove: 'down',
       obstacles: [],
       gameOver: false,
@@ -24,8 +23,8 @@ class App extends Component {
   }
 
   moveCharacter(event) {
-    let newXPosition = this.state.heroXCoord;
-    let newYPosition = this.state.heroYCoord;
+    let newXPosition = this.state.heroCoord.x;
+    let newYPosition = this.state.heroCoord.y;
     switch (event.keyCode) {
       case 37:
         newXPosition -= 1;
@@ -39,41 +38,39 @@ class App extends Component {
 
       case 38:
         newYPosition -= 1;
-        this.setState({ lastMove: 'down'});
+        this.setState({ lastMove: 'up'});  // origin is upper left
         break;
 
       case 40:
         newYPosition += 1;
-        this.setState({ lastMove: 'up'});
+        this.setState({ lastMove: 'down'});
+        break;
+
+      default:
         break;
     }
 
-    // if(event.keyCode == 40) {
-    //   newYPosition += 1;
-    // } else if(event.keyCode == 38) {
-    //   newYPosition -= 1;
-    // };
-    // if (newYPosition >= this.state.gridRows || newYPosition <= -1) {
-    //   this.setState({ gameOver: true });
-    // } else {
-    //   this.setState({ heroYCoord: newYPosition });
-    // }
-    this.setState({
-      heroXCoord: newXPosition,
-      heroYCoord: newYPosition
+    let occupiedSquare = this.state.obstacles.filter(obstacle => {
+      return ((obstacle.x === newXPosition) && (obstacle.y === newYPosition));
     });
+
+    if (occupiedSquare.length === 0) {
+      this.setState({
+        heroCoord: {x: newXPosition, y: newYPosition}
+      });
+    }
   };
 
   conveyorBelt() {
-    let intervalId = setInterval(function() {
+    // let intervalId = setInterval(function() {
       let obstacleArray = [...this.state.obstacles];
       let newArray = obstacleArray.map(obstacle => {
         return obstacle - 1;
       })
       this.setState({ obstacles: newArray })
-    }.bind(this), 500);
-
-    this.setState({ intervalId: intervalId });
+    // }.bind(this), 500);
+    //
+    // this.setState({ intervalId: intervalId });
   }
 
   componentDidMount() {
@@ -81,14 +78,16 @@ class App extends Component {
       this.moveCharacter(event);
     });
     let obstacleArray = [...this.state.obstacles];
-    obstacleArray.push(11)
+    obstacleArray.push({
+      image: this.props.tree,
+      x: 7,
+      y: 7
+    })
     this.setState({ obstacles: obstacleArray })
     // this.conveyorBelt();
   }
 
   render() {
-    let tree = this.props.tree;
-    let movement = this.moveCharacter;
     let gameGrid = [];
     let heroSprite;
     let gameScreen;
@@ -112,10 +111,13 @@ class App extends Component {
       case 'left':
         heroSprite = this.props.heroSpriteLeft;
         break;
+
+      default:
+        break;
     }
 
     // top border
-    gameGrid.push(<div style={divStyle}></div>)
+    gameGrid.push(<div style={divStyle} key={-1}></div>)
 
     // main grid
     for (let i = 0; i < this.state.gridRows; i++) {
@@ -123,19 +125,13 @@ class App extends Component {
         key={i}
         row={i}
         numColumns={this.state.gridCols}
-        heroXCoord={this.state.heroXCoord}
-        heroYCoord={this.state.heroYCoord}
+        heroCoord={this.state.heroCoord}
         heroSprite={heroSprite}
         obstacles={this.state.obstacles}
       />)
     }
     // bottom border
-    gameGrid.push(<div style={divStyle}></div>)
-
-
-    // grid.push(
-    //   <div style={divStyle} key={this.state.gridRows}> </div>
-    // )
+    gameGrid.push(<div style={divStyle} key={this.state.gridRows}></div>)
 
     if (this.state.gameOver) {
       gameScreen = <GameOver/>
