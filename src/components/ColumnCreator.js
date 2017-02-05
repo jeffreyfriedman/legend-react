@@ -7,12 +7,14 @@ const ColumnCreator = props => {
   let colStyle = {
     display: 'inline-block'
   }
-  console.log(`Hero: (${props.heroXCoord}, ${props.heroYCoord})`)
-  if ((props.row === props.heroYCoord) && (props.col === props.heroXCoord)) {
+  console.log(`Hero: (${props.heroCoord.x}, ${props.heroCoord.y})`)
+  if ((props.row === props.heroCoord.y) && (props.col === props.heroCoord.x)) {
     col =
     <Hero
       heroSprite={props.heroSprite}
     />
+  } else if ((props.obstacles[0] && props.row === props.obstacles[0].x) && (props.col === props.obstacles[0].y)) {
+    col = <Obstacle obstacle={props.obstacles[0]} />
   } else {
     col = <div style={colStyle} className='col s1'>space</div>
   }
