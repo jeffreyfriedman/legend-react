@@ -7,6 +7,7 @@ import Obstacle from '../components/Obstacle';
 import GameOver from '../components/GameOver';
 
 class App extends Component {
+  debugger;
   constructor(props) {
     super(props);
     this.state = {
@@ -14,6 +15,7 @@ class App extends Component {
       gridRows: 12,
       heroXCoord: 6,
       heroYCoord: 6,  // starting y coordinate
+      lastMove: 'down',
       obstacles: [],
       gameOver: false,
       intervalId: null
@@ -27,18 +29,22 @@ class App extends Component {
     switch (event.keyCode) {
       case 37:
         newXPosition -= 1;
+        this.setState({ lastMove: 'left'});
         break;
 
       case 39:
         newXPosition += 1;
+        this.setState({ lastMove: 'right'});
         break;
 
       case 38:
         newYPosition -= 1;
+        this.setState({ lastMove: 'down'});
         break;
 
       case 40:
         newYPosition += 1;
+        this.setState({ lastMove: 'up'});
         break;
     }
 
@@ -84,10 +90,29 @@ class App extends Component {
     let tree = this.props.tree;
     let movement = this.moveCharacter;
     let gameGrid = [];
+    let heroSprite;
     let gameScreen;
     const divStyle = {
       'borderStyle': 'solid'
     };
+
+    switch (this.state.lastMove) {
+      case 'down':
+        heroSprite = this.props.heroSpriteDown;
+        break;
+
+      case 'up':
+        heroSprite = this.props.heroSpriteUp;
+        break;
+
+      case 'right':
+        heroSprite = this.props.heroSpriteRight;
+        break;
+
+      case 'left':
+        heroSprite = this.props.heroSpriteLeft;
+        break;
+    }
 
     // top border
     gameGrid.push(<div style={divStyle}></div>)
@@ -100,7 +125,7 @@ class App extends Component {
         numColumns={this.state.gridCols}
         heroXCoord={this.state.heroXCoord}
         heroYCoord={this.state.heroYCoord}
-        heroSprite={this.props.heroSprite}
+        heroSprite={heroSprite}
         obstacles={this.state.obstacles}
       />)
     }
