@@ -7,6 +7,7 @@ import heroSpriteRight from '../public/assets/images/sprites/Zelda3Sheet1_251.pn
 import heroSpriteUp from '../public/assets/images/sprites/Zelda3Sheet1_252.png';
 import heroSpriteLeft from '../public/assets/images/sprites/Zelda3Sheet1_253.png';
 import tree from '../public/assets/images/sprites/Zelda3Sheet1_111.png';
+import house from '../public/assets/images/sprites/Zelda3Sheet3_129.png';
 
 ReactDOM.render(
   <App
@@ -15,6 +16,7 @@ ReactDOM.render(
     heroSpriteUp={heroSpriteUp}
     heroSpriteLeft={heroSpriteLeft}
     tree={tree}
+    house={house}
   />,
   document.getElementById('root')
 );

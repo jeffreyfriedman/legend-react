@@ -3,34 +3,48 @@ import Hero from './Hero';
 import Obstacle from './Obstacle';
 
 const ColumnCreator = props => {
-  let col;
-  let colStyle = {
-    display: 'inline-block'
-  }
-  console.log(`Hero: (${props.heroCoord.x}, ${props.heroCoord.y})`)
+  let col,
+      colStyle,
+      colSpan,
+      rowSpan;
+
+  // console.log(`Hero: (${props.heroCoord.x}, ${props.heroCoord.y})`)
   if ((props.row === props.heroCoord.y) && (props.col === props.heroCoord.x)) {
+    colStyle = {
+      display: 'inline-block',
+      width: '3em'
+    }
+
     col =
     <Hero
       heroSprite={props.heroSprite}
     />
-  } else if ((props.obstacles[0] && props.row === props.obstacles[0].x) && (props.col === props.obstacles[0].y)) {
-    col = <Obstacle obstacle={props.obstacles[0]} />
-  } else {
-    col = <div style={colStyle} className='col s1'>space</div>
+
+  }
+
+  if (props.obstacle) {
+    colStyle = {
+      display: 'inline-block',
+      width: '3em'
+    }
+    colSpan = 2;
+    rowSpan = Math.floor(props.obstacle.height / 20);
+    col = <Obstacle obstacle={props.obstacle} />
+  }
+
+  if (!col) {
+    colStyle = {
+      display: 'inline-block',
+      width: '3em'
+    }
+    col = '';
   }
 
   return (
-    <div style={colStyle}>
+    <td style={colStyle} colSpan={colSpan} rowSpan={rowSpan} height='50em'>
       {col}
-    </div>
+    </td>
   )
 }
 
 export default ColumnCreator;
-
-// } else if ((props.row === 11) && (props.col === props.obstacles[0])) {
-//   console.log(`Obstacle row: ${props.row}, Obstacle col: ${props.col}`);
-//   col = <div className='col s1'><Obstacle tree={props.tree} /></div>
-// } else {
-//   col = <div className='col s1'>space</div>
-// }

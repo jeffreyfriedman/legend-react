@@ -1,12 +1,15 @@
 import React from 'react';
 
 const Obstacle = props => {
+  let imageToggle;
+  if (props.obstacle.image) {
+    imageToggle = <img src={props.obstacle.image} alt="Obstacle" height={props.obstacle.height} width={props.obstacle.width}/>
+  }
   return (
     <div>
-      <img src={props.obstacle.image} alt="Obstacle" height="34" width="32"/>
+      {imageToggle}
     </div>
   )
 }
 
 export default Obstacle;
-//

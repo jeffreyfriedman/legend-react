@@ -5,6 +5,10 @@ const RowCreator = props => {
   let row = [];
   for (let i = 0; i < props.numColumns; i++) {
     let coordinate = i;
+    let obstacleCell = props.obstacles.filter(obstacle => {
+      return (obstacle && props.row === obstacle.y) && (i === obstacle.x)
+    });
+
     row.push(
       <ColumnCreator
         key={coordinate}
@@ -12,15 +16,36 @@ const RowCreator = props => {
         col={i}
         heroCoord={props.heroCoord}
         heroSprite={props.heroSprite}
-        obstacles={props.obstacles}
+        obstacle={obstacleCell[0]}
       />
     )
+
+    let spacer = {
+      x: i + 1,
+      y: props.row
+    }
+
+    if (obstacleCell[0]) {
+      let multiCols = Math.floor(obstacleCell[0].width / 50); // 50 is arbitrarily chosen
+      if (multiCols > 0) {
+        row.push(
+          <ColumnCreator
+            key={`spacer_${coordinate}`}
+            row={spacer.y}
+            col={spacer.x}
+            heroCoord={props.heroCoord}
+            heroSprite={props.heroSprite}
+            obstacle={spacer}
+          />)
+        i += multiCols;
+      }
+    }
   }
 
   return (
-    <div className='row'>
-      &nbsp;{row}
-    </div>
+    <tr>
+      {row}
+    </tr>
   )
 }
 

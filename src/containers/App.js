@@ -20,7 +20,14 @@ class App extends Component {
       intervalId: null
     }
     this.moveCharacter = this.moveCharacter.bind(this);
+    // this.addSpacer = this.addSpacer.bind(this);
   }
+
+  // addSpacer(obj) {
+  //   let obstacleArray = [...this.state.obstacles];
+  //   obstacleArray.push(obj)
+  //   this.setState({ obstacles: obstacleArray })
+  // }
 
   moveCharacter(event) {
     let newXPosition = this.state.heroCoord.x;
@@ -56,44 +63,40 @@ class App extends Component {
 
     if (occupiedSquare.length === 0) {
       this.setState({
-        heroCoord: {x: newXPosition, y: newYPosition}
+        heroCoord: { x: newXPosition, y: newYPosition }
       });
     }
   };
-
-  conveyorBelt() {
-    // let intervalId = setInterval(function() {
-      let obstacleArray = [...this.state.obstacles];
-      let newArray = obstacleArray.map(obstacle => {
-        return obstacle - 1;
-      })
-      this.setState({ obstacles: newArray })
-    // }.bind(this), 500);
-    //
-    // this.setState({ intervalId: intervalId });
-  }
 
   componentDidMount() {
     document.body.addEventListener('keydown', (event) => {
       this.moveCharacter(event);
     });
     let obstacleArray = [...this.state.obstacles];
+    // tree
     obstacleArray.push({
       image: this.props.tree,
+      height: 34,
+      width: 32,
       x: 7,
       y: 7
+    });
+
+    // house
+    obstacleArray.push({
+      image: this.props.house,
+      height: 102,
+      width: 96,
+      x: 2,
+      y: 2
     })
     this.setState({ obstacles: obstacleArray })
-    // this.conveyorBelt();
   }
 
   render() {
     let gameGrid = [];
     let heroSprite;
     let gameScreen;
-    const divStyle = {
-      'borderStyle': 'solid'
-    };
 
     switch (this.state.lastMove) {
       case 'down':
@@ -116,9 +119,6 @@ class App extends Component {
         break;
     }
 
-    // top border
-    gameGrid.push(<div style={divStyle} key={-1}></div>)
-
     // main grid
     for (let i = 0; i < this.state.gridRows; i++) {
       gameGrid.push(<RowCreator
@@ -130,8 +130,6 @@ class App extends Component {
         obstacles={this.state.obstacles}
       />)
     }
-    // bottom border
-    gameGrid.push(<div style={divStyle} key={this.state.gridRows}></div>)
 
     if (this.state.gameOver) {
       gameScreen = <GameOver/>
@@ -141,7 +139,11 @@ class App extends Component {
 
     return (
       <div>
-        {gameScreen}
+        <table className="fixed">
+          <tbody>
+            {gameScreen}
+          </tbody>
+        </table>
       </div>
     );
   }
