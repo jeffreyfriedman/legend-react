@@ -8,7 +8,6 @@ const ColumnCreator = props => {
       colSpan,
       rowSpan;
 
-  // console.log(`Hero: (${props.heroCoord.x}, ${props.heroCoord.y})`)
   if ((props.row === props.heroCoord.y) && (props.col === props.heroCoord.x)) {
     colStyle = {
       display: 'inline-block',
@@ -28,7 +27,7 @@ const ColumnCreator = props => {
       width: '3em'
     }
     colSpan = 2;
-    rowSpan = Math.floor(props.obstacle.height / 20);
+    rowSpan = 2;
     col = <Obstacle obstacle={props.obstacle} />
   }
 

@@ -20,14 +20,7 @@ class App extends Component {
       intervalId: null
     }
     this.moveCharacter = this.moveCharacter.bind(this);
-    // this.addSpacer = this.addSpacer.bind(this);
   }
-
-  // addSpacer(obj) {
-  //   let obstacleArray = [...this.state.obstacles];
-  //   obstacleArray.push(obj)
-  //   this.setState({ obstacles: obstacleArray })
-  // }
 
   moveCharacter(event) {
     let newXPosition = this.state.heroCoord.x;
@@ -90,7 +83,37 @@ class App extends Component {
       x: 2,
       y: 2
     })
-    this.setState({ obstacles: obstacleArray })
+
+    let spacerArray = [];
+    let isSquare = 0;
+    obstacleArray.forEach(obstacle => {
+      if (obstacle.width && Math.floor(obstacle.width / 48) >= 1) {
+        isSquare++;
+        for (let i = 1; i < Math.floor(obstacle.width / 48); i++) {
+          spacerArray.push({
+            x: obstacle.x + i,
+            y: obstacle.y
+          })
+        }
+      }
+      if (obstacle.height && Math.floor(obstacle.height / 50) >= 2) {
+        isSquare++;
+        for (let i = 1; i < Math.floor(obstacle.height / 50); i++) {
+          spacerArray.push({
+            x: obstacle.x,
+            y: obstacle.y + i
+          })
+        }
+      }
+      if (isSquare === 2) {
+        spacerArray.push({
+          x: obstacle.x + 1,
+          y: obstacle.y + 1
+        })
+      }
+    })
+
+    this.setState({ obstacles: obstacleArray.concat(spacerArray) })
   }
 
   render() {
