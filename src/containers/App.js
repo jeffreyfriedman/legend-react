@@ -4,7 +4,6 @@ import RowCreator from '../components/RowCreator';
 import GameOver from '../components/GameOver';
 
 class App extends Component {
-  debugger;
   constructor(props) {
     super(props);
     this.state = {
