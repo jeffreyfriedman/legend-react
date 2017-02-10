@@ -3,6 +3,12 @@ import './Game.css';
 import RowCreator from '../components/RowCreator';
 import GameOver from '../components/GameOver';
 import StatusBar from '../components/StatusBar';
+import heroSpriteDown from '../assets/images/sprites/Zelda3Sheet1_250.png';
+import heroSpriteRight from '../assets/images/sprites/Zelda3Sheet1_251.png';
+import heroSpriteUp from '../assets/images/sprites/Zelda3Sheet1_252.png';
+import heroSpriteLeft from '../assets/images/sprites/Zelda3Sheet1_253.png';
+import tree from '../assets/images/sprites/Zelda3Sheet1_111.png';
+import house from '../assets/images/sprites/Zelda3Sheet3_129.png';
 
 export default class Game extends Component {
   constructor(props) {
@@ -68,7 +74,7 @@ export default class Game extends Component {
     let obstacleArray = [...this.state.obstacles];
     // tree
     obstacleArray.push({
-      image: this.props.tree,
+      image: tree,
       height: 34,
       width: 32,
       x: 7,
@@ -77,7 +83,7 @@ export default class Game extends Component {
 
     // house
     obstacleArray.push({
-      image: this.props.house,
+      image: house,
       height: 102,
       width: 96,
       x: 2,
@@ -123,19 +129,19 @@ export default class Game extends Component {
 
     switch (this.state.lastMove) {
       case 'down':
-        heroSprite = this.props.heroSpriteDown;
+        heroSprite = heroSpriteDown;
         break;
 
       case 'up':
-        heroSprite = this.props.heroSpriteUp;
+        heroSprite = heroSpriteUp;
         break;
 
       case 'right':
-        heroSprite = this.props.heroSpriteRight;
+        heroSprite = heroSpriteRight;
         break;
 
       case 'left':
-        heroSprite = this.props.heroSpriteLeft;
+        heroSprite = heroSpriteLeft;
         break;
 
       default:
