@@ -18,7 +18,6 @@ const ColumnCreator = props => {
     <Hero
       heroSprite={props.heroSprite}
     />
-
   }
 
   if (props.obstacle) {

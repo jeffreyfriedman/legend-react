@@ -5,6 +5,7 @@ const RowCreator = props => {
   let row = [];
   for (let i = 0; i < props.numColumns; i++) {
     let coordinate = i;
+    // pass in obstacle that will be present in the next rendered cell
     let obstacleCell = props.obstacles.filter(obstacle => {
       return (obstacle && props.row === obstacle.y) && (i === obstacle.x)
     });
@@ -15,6 +16,7 @@ const RowCreator = props => {
         row={props.row}
         col={i}
         heroCoord={props.heroCoord}
+        statusBar={props.statusBar}
         heroSprite={props.heroSprite}
         obstacle={obstacleCell[0]}
       />
