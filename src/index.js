@@ -1,22 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './containers/App';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { Routes } from './containers/Routes';
+import { store } from './store';
 import './index.css';
-import heroSpriteDown from '../public/assets/images/sprites/Zelda3Sheet1_250.png';
-import heroSpriteRight from '../public/assets/images/sprites/Zelda3Sheet1_251.png';
-import heroSpriteUp from '../public/assets/images/sprites/Zelda3Sheet1_252.png';
-import heroSpriteLeft from '../public/assets/images/sprites/Zelda3Sheet1_253.png';
-import tree from '../public/assets/images/sprites/Zelda3Sheet1_111.png';
-import house from '../public/assets/images/sprites/Zelda3Sheet3_129.png';
 
-ReactDOM.render(
-  <App
-    heroSpriteDown={heroSpriteDown}
-    heroSpriteRight={heroSpriteRight}
-    heroSpriteUp={heroSpriteUp}
-    heroSpriteLeft={heroSpriteLeft}
-    tree={tree}
-    house={house}
-  />,
-  document.getElementById('root')
+const router = (
+  <Provider store={store}>
+    {Routes}
+  </Provider>
 );
+
+render(router, document.getElementById('root'));
