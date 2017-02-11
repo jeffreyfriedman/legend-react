@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { IndexLink } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/actionCreators';
@@ -28,7 +27,9 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    hero: state.hero
+    hero: state.hero,
+    assets: state.assets,
+    obstacles: state.obstacles
   }
 }
 

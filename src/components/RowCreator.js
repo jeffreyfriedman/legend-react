@@ -16,7 +16,6 @@ const RowCreator = props => {
         row={props.row}
         col={i}
         heroCoord={props.heroCoord}
-        statusBar={props.statusBar}
         heroSprite={props.heroSprite}
         obstacle={obstacleCell[0]}
       />
