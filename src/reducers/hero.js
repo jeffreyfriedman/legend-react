@@ -7,7 +7,7 @@ import {
   heroSpriteRightArray,
   heroSpriteUpArray,
   heroSpriteDownArray
-}from '../assets/images/sprites/link/animation.js';
+} from '../assets/images/sprites/link/animation.js';
 
 const defaultState = {
   coordinates: {
@@ -15,7 +15,7 @@ const defaultState = {
     y: 6
   },
   lastMove: 'down',
-  sprite: heroSpriteDownArray[0],
+  sprite: heroSpriteDown,
   stats: {
     health: 100
   }
