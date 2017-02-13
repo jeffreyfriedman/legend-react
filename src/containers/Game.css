@@ -23,16 +23,29 @@
   to { transform: rotate(360deg); }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 li {
   display: inline;
 }
 
-.alignleft {
+table{
+  border: 1px solid black;
+  table-layout: fixed;
+  width: 1000px;
+}
+
+th, td {
+  border: 1px solid black;
+  width: 100px;
+}
+
+.stats {
+  border: 1px solid black;
+}
+
+.align-upper-left {
+  margin: 0;
+  padding: 0;
+  width: 1em;
   text-align: left;
 }
 

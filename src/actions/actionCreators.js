@@ -29,12 +29,12 @@ export const moveCharacter = (event) => {
         lastMove = hero.lastMove;
     switch (event.keyCode) {
       case 37:
-        newXPosition -= 1;
+        newXPosition -= 2;
         lastMove = 'left';
         break;
 
       case 39:
-        newXPosition += 1;
+        newXPosition += 2;
         lastMove = 'right';
         break;
 

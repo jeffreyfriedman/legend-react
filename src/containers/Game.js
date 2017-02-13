@@ -9,8 +9,8 @@ export default class Game extends Component {
     super(props);
     this.state = {
       grid: {
-        cols: 200,
-        rows: 10,
+        cols: 175,
+        rows: 20,
         cellWidth: 1,
         cellHeight: 1
       },

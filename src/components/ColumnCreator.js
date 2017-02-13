@@ -44,7 +44,7 @@ const ColumnCreator = props => {
   }
 
   return (
-    <td style={colStyle} colSpan={colSpan} rowSpan={rowSpan} height='50em'>
+    <td style={colStyle} colSpan={colSpan} rowSpan={rowSpan} className='align-upper-left' height='25em'>
       {col}
     </td>
   )

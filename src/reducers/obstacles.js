@@ -5,15 +5,15 @@ const initializeObstacles = () => {
   const obstaclesArray = [
     { // tree
       image: tree,
-      relativeHeight: 34,
-      relativeWidth: 6,
-      x: 7,
-      y: 7
+      rowHeight: 1,
+      colsWidth: 6,
+      x: 20,
+      y: 10
     },
     { // house
       image: house,
-      relativeHeight: 102,
-      relativeWidth: 26,
+      rowHeight: 3,
+      colsWidth: 26,
       x: 2,
       y: 2
     }
@@ -24,8 +24,12 @@ const initializeObstacles = () => {
     initialArray.push(obstacle);
     // make multi-cell obstacles/characters take up physical space across
     // all of the cells in which they are rendered
-    for (let i = 0; i <= obstacle.relativeWidth; i++) {
-      initialArray.push({ x: obstacle.x + i, y: obstacle.y })
+    for (let i = 0; i < obstacle.colsWidth; i++) {
+      initialArray.push({ x: obstacle.x + i, y: obstacle.y });
+      for (let j = 0; j < obstacle.rowHeight; j++) {
+        initialArray.push({ x: obstacle.x + i, y: obstacle.y + j });
+      }
+
     }
   });
   return initialArray;
