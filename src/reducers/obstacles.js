@@ -14,8 +14,8 @@ const initializeObstacles = () => {
       image: house,
       rowHeight: 3,
       colsWidth: 26,
-      x: 2,
-      y: 2
+      x: 20,
+      y: 4
     }
   ]
 
@@ -29,7 +29,6 @@ const initializeObstacles = () => {
       for (let j = 0; j < obstacle.rowHeight; j++) {
         initialArray.push({ x: obstacle.x + i, y: obstacle.y + j });
       }
-
     }
   });
   return initialArray;

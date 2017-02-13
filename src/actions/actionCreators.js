@@ -54,8 +54,21 @@ export const moveCharacter = (event) => {
 
 
     // check if cell to move character into is already occupied
+    // character has mass of four columns, so check up to two columns to the right
+    // (character is left-aligned, so don't need to check left)
     let occupiedSquare = obstacles.filter(obstacle => {
-      return ((obstacle.x === newXPosition) && (obstacle.y === newYPosition));
+      return (
+        ((obstacle.x === newXPosition) &&
+        (obstacle.y === newYPosition)) ||
+        ((obstacle.x === newXPosition + 1) &&
+        (obstacle.y === newYPosition)) ||
+        ((obstacle.x === newXPosition + 2) &&
+        (obstacle.y === newYPosition)) ||
+        ((obstacle.x === newXPosition + 3) &&
+        (obstacle.y === newYPosition)) ||
+        ((obstacle.x === newXPosition + 4) &&
+        (obstacle.y === newYPosition))
+      );
     });
 
     // if not occupied, allow character to move into that cell
