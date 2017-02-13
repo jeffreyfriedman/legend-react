@@ -27,6 +27,27 @@ li {
   display: inline;
 }
 
+table{
+  table-layout: fixed;
+  width: 1000px;
+}
+
+th, td {
+  border: 1px solid transparent;
+  width: 100px;
+}
+
+.stats {
+  border: 1px solid black;
+}
+
+.align-upper-left {
+  margin: 0;
+  padding: 0;
+  width: 1em;
+  text-align: left;
+}
+
 .game {
   height: 6.82vh;
 }

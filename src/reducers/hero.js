@@ -12,7 +12,7 @@ import {
 const defaultState = {
   coordinates: {
     x: 6,
-    y: 6
+    y: 10
   },
   lastMove: 'down',
   sprite: heroSpriteDown,

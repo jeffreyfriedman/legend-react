@@ -8,8 +8,12 @@ export default class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gridCols: 12,
-      gridRows: 12,
+      grid: {
+        cols: 175,
+        rows: 20,
+        cellWidth: 1,
+        cellHeight: 1
+      },
       gameOver: false,
       intervalId: null
     }
@@ -35,11 +39,11 @@ export default class Game extends Component {
       </tr>)
 
     // main grid
-    for (let i = 0; i < this.state.gridRows; i++) {
+    for (let i = 0; i < this.state.grid.rows; i++) {
       gameGrid.push(<RowCreator
         key={i}
         row={i}
-        numColumns={this.state.gridCols}
+        gridDetails={this.state.grid}
         heroCoord={this.props.hero.coordinates}
         heroSprite={this.props.hero.sprite}
         obstacles={this.props.obstacles}

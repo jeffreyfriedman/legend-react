@@ -6,7 +6,3 @@ body {
 
 /*table.fixed { table-layout:fixed; }
 table.fixed td { overflow: hidden; }*/
-
-td {
-  border: 1px solid black;
-}
