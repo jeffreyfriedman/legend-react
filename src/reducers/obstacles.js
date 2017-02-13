@@ -5,50 +5,30 @@ const initializeObstacles = () => {
   const obstaclesArray = [
     { // tree
       image: tree,
-      height: 34,
-      width: 32,
+      relativeHeight: 34,
+      relativeWidth: 6,
       x: 7,
       y: 7
     },
     { // house
       image: house,
-      height: 102,
-      width: 96,
+      relativeHeight: 102,
+      relativeWidth: 26,
       x: 2,
       y: 2
     }
   ]
 
-  let spacerArray = [];
-  let isSquare = 0;
+  let initialArray = [];
   obstaclesArray.forEach(obstacle => {
-    if (obstacle.width && Math.floor(obstacle.width / 48) >= 1) {
-      isSquare++;
-      for (let i = 1; i < Math.floor(obstacle.width / 48); i++) {
-        spacerArray.push({
-          x: obstacle.x + i,
-          y: obstacle.y
-        })
-      }
-    }
-    if (obstacle.height && Math.floor(obstacle.height / 50) >= 2) {
-      isSquare++;
-      for (let i = 1; i < Math.floor(obstacle.height / 50); i++) {
-        spacerArray.push({
-          x: obstacle.x,
-          y: obstacle.y + i
-        });
-      }
-    }
-    if (isSquare === 2) {
-      spacerArray.push({
-        x: obstacle.x + 1,
-        y: obstacle.y + 1
-      });
+    initialArray.push(obstacle);
+    // make multi-cell obstacles/characters take up physical space across
+    // all of the cells in which they are rendered
+    for (let i = 0; i <= obstacle.relativeWidth; i++) {
+      initialArray.push({ x: obstacle.x + i, y: obstacle.y })
     }
   });
-
-  return obstaclesArray.concat(spacerArray);
+  return initialArray;
 }
 
 export const ObstaclesReducer = (state = initializeObstacles(), action) => {

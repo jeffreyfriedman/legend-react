@@ -39,7 +39,6 @@ export const moveCharacter = (event) => {
         break;
 
       case 38:
-        // this.props.moveHeroDirection('up');
         newYPosition -= 1;
         lastMove = 'up';  // origin is upper left
         break;

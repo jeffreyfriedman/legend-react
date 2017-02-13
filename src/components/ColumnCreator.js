@@ -3,7 +3,8 @@ import Hero from './Hero';
 import Obstacle from './Obstacle';
 
 const ColumnCreator = props => {
-  let col,
+  let cellWidth = props.gridDetails ? props.gridDetails.cellWidth : 1,
+      col,
       colStyle,
       colSpan,
       rowSpan;
@@ -11,7 +12,7 @@ const ColumnCreator = props => {
   if ((props.row === props.heroCoord.y) && (props.col === props.heroCoord.x)) {
     colStyle = {
       display: 'inline-block',
-      width: '3em'
+      width: 3 * cellWidth
     }
 
     col =
@@ -21,19 +22,23 @@ const ColumnCreator = props => {
   }
 
   if (props.obstacle) {
+    colSpan = props.multiCols ? props.multiCols : 2;
+    rowSpan = 2;
     colStyle = {
       display: 'inline-block',
-      width: '3em'
+      overflow: 'visible',
+      width: 3 * cellWidth
     }
-    colSpan = 2;
-    rowSpan = 2;
-    col = <Obstacle obstacle={props.obstacle} />
+    col = <Obstacle
+      obstacle={props.obstacle}
+      gridDetails={props.gridDetails}
+      />
   }
 
   if (!col) {
     colStyle = {
       display: 'inline-block',
-      width: '3em'
+      width: 3 * cellWidth
     }
     col = '';
   }

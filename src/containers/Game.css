@@ -23,8 +23,17 @@
   to { transform: rotate(360deg); }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 li {
   display: inline;
+}
+
+.alignleft {
+  text-align: left;
 }
 
 .game {
