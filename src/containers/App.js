@@ -3,6 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/actionCreators';
 import NavLink from '../components/NavLink';
+import myTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 class App extends Component {
   constructor(props) {
@@ -14,13 +17,16 @@ class App extends Component {
 
   render() {
     return(
+      <MuiThemeProvider muiTheme={getMuiTheme(myTheme)}>
         <div>
           <ul>
-            <li><NavLink to="/">&nbsp;Legend of React</NavLink></li>
+            <li><NavLink to="/">Legend of React</NavLink></li>
+            <li><NavLink to="alternative">Non-Table</NavLink></li>
             <li><NavLink to="/about">About</NavLink></li>
           </ul>
-        {React.cloneElement(this.props.children, this.props)}
-      </div>
+          {React.cloneElement(this.props.children, this.props)}
+        </div>
+      </MuiThemeProvider>
     )
   }
 }
