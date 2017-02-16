@@ -20,69 +20,31 @@ export const adjustHeroCoordinates = (hero, newCoordinates, lastMove) => {
   }
 }
 
-export const moveCharacter = (event) => {
+export const resetSprite = (hero) => {
+  return {
+      type: 'RESET_HERO_SPRITE',
+      hero
+  }
+}
+
+export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
   return (dispatch, getState) => {
+
     let hero = getState().hero,
-        obstacles = getState().obstacles,
-        newXPosition = hero.coordinates.x,
-        newYPosition = hero.coordinates.y,
-        lastMove = hero.lastMove;
-    switch (event.keyCode) {
-      case 37:
-        newXPosition -= 2;
-        lastMove = 'left';
-        break;
+        obstacles = getState().obstacles;
 
-      case 39:
-        newXPosition += 2;
-        lastMove = 'right';
-        break;
-
-      case 38:
-        newYPosition -= 1;
-        lastMove = 'up';  // origin is upper left
-        break;
-
-      case 40:
-        newYPosition += 1;
-        lastMove = 'down';
-        break;
-
-      default:
-        break;
-    }
-
-    // check if cell to move character into is already occupied
-    // character has mass of four columns, so check up to two columns to the right
-    // (character is left-aligned, so don't need to check left)
     let occupiedSquare = obstacles.filter(obstacle => {
       return (
-        ((obstacle.x === newXPosition) ||
-        (obstacle.x === newXPosition + 1) ||
-        (obstacle.x === newXPosition + 2)  ||
-        (obstacle.x === newXPosition + 3) ||
-        (obstacle.x === newXPosition + 4)) &&
-        (obstacle.y === newYPosition)
+        ((newXPosition + hero.pixelsWidth >= obstacle.coordinates.x &&
+          newXPosition <= obstacle.coordinates.x + obstacle.pixelsWidth) &&
+          (newYPosition + hero.pixelsHeight >= obstacle.coordinates.y && newYPosition <= obstacle.coordinates.y + obstacle.pixelsHeight))
       );
     });
 
     // if not occupied, allow character to move into that cell
-    if (occupiedSquare.length === 0) {
+    if (occupiedSquare.length === 0 && newYPosition >= 85) {
       let newCoordinates = { x: newXPosition, y: newYPosition }
-      dispatch(adjustHeroCoordinates(getState().hero, newCoordinates, lastMove));
+      dispatch(adjustHeroCoordinates(hero, newCoordinates, lastMove));
     }
   }
 };
-
-export const moveHeroDirection = (direction) => {
-  return (dispatch, getState) => {
-    switch(direction) {
-      case 'up':
-        dispatch(adjustHeroCoordinates(getState().hero, direction));
-        break;
-
-      default:
-        break;
-    }
-  }
-}

@@ -5,7 +5,8 @@ const Obstacle = props => {
   if (props.obstacle.image) {
     imageToggle = <img src={props.obstacle.image}
       alt="Obstacle"
-      width={props.obstacle.colsWidth * 5}/>
+      style={props.position}
+      />
   }
   return (
     <div className='align-upper-left'>

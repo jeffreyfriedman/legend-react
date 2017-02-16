@@ -4,9 +4,9 @@ const StatusBar = props => {
   let heroHealth;
   if (props.hero) heroHealth = props.hero.stats.health;
   return(
-    <td className='stats'>
+    <div className='stats'>
       Health: {heroHealth}
-    </td>
+    </div>
   )
 }
 

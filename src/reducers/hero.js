@@ -11,9 +11,11 @@ import {
 
 const defaultState = {
   coordinates: {
-    x: 6,
-    y: 10
+    x: 200,
+    y: 200
   },
+  pixelsWidth: 16,
+  pixelsHeight: 22,
   lastMove: 'down',
   sprite: heroSpriteDown,
   stats: {
@@ -70,6 +72,13 @@ export const HeroReducer = (state = defaultState, action) => {
         default:
           break;
       }
+      return newState;
+
+    case 'RESET_HERO_SPRITE':
+      if (state.lastMove === 'up') newState.sprite = heroSpriteUp;
+      if (state.lastMove === 'down') newState.sprite = heroSpriteDown;
+      if (state.lastMove === 'left') newState.sprite = heroSpriteLeft;
+      if (state.lastMove === 'right') newState.sprite = heroSpriteRight;
       return newState;
 
     default:
