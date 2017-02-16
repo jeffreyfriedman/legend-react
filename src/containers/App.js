@@ -21,7 +21,6 @@ class App extends Component {
         <div>
           <ul>
             <li><NavLink to="/">Legend of React</NavLink></li>
-            <li><NavLink to="alternative">Non-Table</NavLink></li>
             <li><NavLink to="/about">About</NavLink></li>
           </ul>
           {React.cloneElement(this.props.children, this.props)}

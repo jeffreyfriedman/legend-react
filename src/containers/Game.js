@@ -1,69 +1,92 @@
 import React, { Component } from 'react';
 import './Game.css';
-import RowCreator from '../components/RowCreator';
-import GameOver from '../components/GameOver';
 import StatusBar from '../components/StatusBar';
+import Obstacle from '../components/Obstacle';
+let keyState = {};
 
 export default class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      grid: {
-        cols: 175,
-        rows: 20,
-        cellWidth: 1,
-        cellHeight: 1
-      },
       gameOver: false,
       intervalId: null
     }
+    this.gameLoop = this.gameLoop.bind(this);
   }
 
   componentDidMount() {
-    document.body.addEventListener('keydown', (event) => {
-      this.props.moveCharacter(event);
+    window.addEventListener('keydown', (e) => {
+      keyState[e.keyCode || e.which] = true;
+      this.gameLoop();
+    });
+
+    window.addEventListener('keyup', (e) => {
+      keyState[e.keyCode || e.which] = false;
+      this.props.resetSprite(this.props.hero);
     });
   }
 
+  gameLoop() {
+    let speed = 4;
+    let currentXPosition = this.props.hero.coordinates.x;
+    let currentYPosition = this.props.hero.coordinates.y;
+    let lastMove;
+
+    if (keyState[37] || keyState[65]) { // a
+      currentXPosition -= speed;
+      lastMove = 'left';
+    }
+
+    if (keyState[39] || keyState[68]) { // d
+      currentXPosition += speed;
+      lastMove = 'right';
+    }
+
+    if (keyState[38] || keyState[87]) { // w
+      currentYPosition -= speed;
+      lastMove = 'up';
+    }
+
+    if (keyState[40] || keyState[88]) { // x
+      currentYPosition += speed;
+      lastMove = 'down';
+    }
+
+    this.props.moveCharacter(currentXPosition, currentYPosition, lastMove);
+  }
+
+
   render() {
-    let gameGrid = [];
-    let gameScreen;
+    let heroStyle = {
+      position: 'absolute',
+      left: this.props.hero.coordinates.x,
+      top: this.props.hero.coordinates.y
+    }
 
-    // Status bar floats above main grid
+    let obstacles = this.props.obstacles.map((obstacle, index) => {
+      let obstacleStyle = {
+        position: 'absolute',
+        left: obstacle.coordinates.x,
+        top: obstacle.coordinates.y
+      }
+      return <Obstacle obstacle={obstacle} position={obstacleStyle} key={index}/>
+    });
+
     let statusBarStyle = {
-      textAlign: 'right'
-    }
-    gameGrid.push(
-      <tr style={statusBarStyle} key={-1}>
-        <StatusBar hero={this.props.hero}/>
-      </tr>)
-
-    // main grid
-    for (let i = 0; i < this.state.grid.rows; i++) {
-      gameGrid.push(<RowCreator
-        key={i}
-        row={i}
-        gridDetails={this.state.grid}
-        heroCoord={this.props.hero.coordinates}
-        heroSprite={this.props.hero.sprite}
-        obstacles={this.props.obstacles}
-        {...this.props}
-      />)
-    }
-
-    if (this.state.gameOver) {
-      gameScreen = <GameOver/>
-    } else {
-      gameScreen = gameGrid;
+      left: 0,
+      top: 10
     }
 
     return (
       <div>
-        <table className="fixed">
-          <tbody>
-            {gameScreen}
-          </tbody>
-        </table>
+        <StatusBar style={statusBarStyle}/>
+        <img
+          src={this.props.hero.sprite}
+          alt='hero'
+          style={heroStyle}
+          >
+        </img>
+        {obstacles}
       </div>
     );
   }
