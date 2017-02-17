@@ -2,6 +2,8 @@ import heroSpriteDown from '../assets/images/sprites/Zelda3Sheet1_250.png';
 import heroSpriteRight from '../assets/images/sprites/Zelda3Sheet1_251.png';
 import heroSpriteUp from '../assets/images/sprites/Zelda3Sheet1_252.png';
 import heroSpriteLeft from '../assets/images/sprites/Zelda3Sheet1_253.png';
+import gotSword1 from '../assets/images/sprites/link/sprites_79.png';
+
 import {
   heroSpriteLeftArray,
   heroSpriteRightArray,
@@ -20,7 +22,15 @@ const defaultState = {
   sprite: heroSpriteDown,
   stats: {
     health: 100
-  }
+  },
+  gotItem: false
+}
+
+const wait = (ms) => {
+  let d = new Date();
+  let d2 = null;
+  do { d2 = new Date(); }
+  while(d2 - d < ms);
 }
 
 export const HeroReducer = (state = defaultState, action) => {
@@ -29,9 +39,15 @@ export const HeroReducer = (state = defaultState, action) => {
     case 'INITIALIZE_HERO':
       return action.hero
 
+    case 'CELEBRATE_ITEM':
+      newState.gotItem = true;
+      newState.sprite = gotSword1;
+      return newState;
+
     case 'ADJUST_HERO_COORDINATES':
       newState.coordinates = action.newCoordinates;
       newState.lastMove = action.lastMove;
+
       switch (action.lastMove) {
         case 'down':
           let downSpriteIndex = heroSpriteDownArray.indexOf(state.sprite);
@@ -75,6 +91,10 @@ export const HeroReducer = (state = defaultState, action) => {
       return newState;
 
     case 'RESET_HERO_SPRITE':
+      if (state.gotItem) {
+        wait(2000);
+        newState.gotItem = false;
+      }
       if (state.lastMove === 'up') newState.sprite = heroSpriteUp;
       if (state.lastMove === 'down') newState.sprite = heroSpriteDown;
       if (state.lastMove === 'left') newState.sprite = heroSpriteLeft;

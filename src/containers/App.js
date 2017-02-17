@@ -33,7 +33,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     hero: state.hero,
-    obstacles: state.obstacles
+    obstacles: state.obstacles,
+    npcs: state.npcs
   }
 }
 

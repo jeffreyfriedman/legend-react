@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Game.css';
 import StatusBar from '../components/StatusBar';
 import Obstacle from '../components/Obstacle';
+import Npc from '../components/Npc';
 let keyState = {};
 
 export default class Game extends Component {
@@ -72,6 +73,17 @@ export default class Game extends Component {
       return <Obstacle obstacle={obstacle} position={obstacleStyle} key={index}/>
     });
 
+    let npcs = this.props.npcs.map((npc, index) => {
+      let npcStyle = {
+        position: 'absolute',
+        left: npc.coordinates.x,
+        top: npc.coordinates.y
+      }
+      return <Npc npc={npc} position={npcStyle} key={index}/>
+    });
+
+
+
     let statusBarStyle = {
       left: 0,
       top: 10
@@ -87,6 +99,7 @@ export default class Game extends Component {
           >
         </img>
         {obstacles}
+        {npcs}
       </div>
     );
   }
