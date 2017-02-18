@@ -11,12 +11,19 @@ export const heroStatus = (hero) => {
   }
 }
 
+export const celebrateItem = (item) => {
+  return {
+    type: 'CELEBRATE_ITEM',
+    item
+  }
+}
+
 export const adjustHeroCoordinates = (hero, newCoordinates, lastMove) => {
   return {
     type: 'ADJUST_HERO_COORDINATES',
+    hero,
     newCoordinates,
-    lastMove,
-    hero
+    lastMove
   }
 }
 
@@ -31,9 +38,11 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
   return (dispatch, getState) => {
 
     let hero = getState().hero,
-        obstacles = getState().obstacles;
+        obstacles = getState().obstacles,
+        npcs = getState().npcs;
 
-    let occupiedSquare = obstacles.filter(obstacle => {
+    // get all of the obstacles that occupy the square the protagonist is moving into
+    let obstacleSquare = obstacles.filter(obstacle => {
       return (
         ((newXPosition + hero.pixelsWidth >= obstacle.coordinates.x &&
           newXPosition <= obstacle.coordinates.x + obstacle.pixelsWidth) &&
@@ -41,10 +50,33 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
       );
     });
 
+    // get all of the NPCs that occupy the square the protagonist is moving into
+    let npcSquare = npcs.filter(npc => {
+      return (
+        ((newXPosition + hero.pixelsWidth >= npc.coordinates.x &&
+          newXPosition <= npc.coordinates.x + npc.pixelsWidth) &&
+          (newYPosition + hero.pixelsHeight >= npc.coordinates.y && newYPosition <= npc.coordinates.y + npc.pixelsHeight))
+      );
+    });
+
+    let occupiedSquare = [...obstacleSquare, ...npcSquare];
+    let itemSquare = occupiedSquare.filter(occupier => {
+      return(occupier.item === true)
+    });
+
+    let item;
+    if (itemSquare.length !== 0) {
+      item = itemSquare[0].item;
+    }
+
     // if not occupied, allow character to move into that cell
     if (occupiedSquare.length === 0 && newYPosition >= 85) {
       let newCoordinates = { x: newXPosition, y: newYPosition }
       dispatch(adjustHeroCoordinates(hero, newCoordinates, lastMove));
+    }
+
+    if (item) {
+      dispatch(celebrateItem(item));
     }
   }
 };
