@@ -46,7 +46,7 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
       return (
         ((newXPosition + hero.pixelsWidth >= obstacle.coordinates.x &&
           newXPosition <= obstacle.coordinates.x + obstacle.pixelsWidth) &&
-          (newYPosition + hero.pixelsHeight >= obstacle.coordinates.y && newYPosition <= obstacle.coordinates.y + obstacle.pixelsHeight))
+          (newYPosition + hero.pixelsHeight >= obstacle.coordinates.y && newYPosition + 15 <= obstacle.coordinates.y + obstacle.pixelsHeight))
       );
     });
 
@@ -55,7 +55,7 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
       return (
         ((newXPosition + hero.pixelsWidth >= npc.coordinates.x &&
           newXPosition <= npc.coordinates.x + npc.pixelsWidth) &&
-          (newYPosition + hero.pixelsHeight >= npc.coordinates.y && newYPosition <= npc.coordinates.y + npc.pixelsHeight))
+          (newYPosition + hero.pixelsHeight >= npc.coordinates.y && newYPosition + 15 <= npc.coordinates.y + npc.pixelsHeight))
       );
     });
 

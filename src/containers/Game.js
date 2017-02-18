@@ -61,7 +61,8 @@ export default class Game extends Component {
     let heroStyle = {
       position: 'absolute',
       left: this.props.hero.coordinates.x,
-      top: this.props.hero.coordinates.y
+      top: this.props.hero.coordinates.y,
+      zIndex: 100
     }
 
     let obstacles = this.props.obstacles.map((obstacle, index) => {
