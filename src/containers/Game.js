@@ -93,7 +93,7 @@ export default class Game extends Component {
       <div>
         <StatusBar style={statusBarStyle}/>
         <img
-          src={this.props.hero.sprite}
+          src={this.props.hero.currentSprite}
           alt='hero'
           style={heroStyle}
           >
