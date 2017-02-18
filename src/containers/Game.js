@@ -69,7 +69,8 @@ export default class Game extends Component {
       let obstacleStyle = {
         position: 'absolute',
         left: obstacle.coordinates.x,
-        top: obstacle.coordinates.y
+        top: obstacle.coordinates.y,
+        zIndex: 0
       }
       return <Obstacle obstacle={obstacle} position={obstacleStyle} key={index}/>
     });
@@ -78,7 +79,8 @@ export default class Game extends Component {
       let npcStyle = {
         position: 'absolute',
         left: npc.coordinates.x,
-        top: npc.coordinates.y
+        top: npc.coordinates.y,
+        zIndex: 1
       }
       return <Npc npc={npc} position={npcStyle} key={index}/>
     });

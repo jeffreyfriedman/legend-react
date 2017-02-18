@@ -7,8 +7,8 @@ const initializeNpcs = () => {
       pixelsWidth: 30,
       pixelsHeight: 30,
       coordinates: {
-        x: 300,
-        y: 200,
+        x: 270,
+        y: 170,
       },
       item: true
     }
