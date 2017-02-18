@@ -67,6 +67,7 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
     let item;
     if (itemSquare.length !== 0) {
       item = itemSquare[0].item;
+      itemSquare[0].item = false;
     }
 
     // if not occupied, allow character to move into that cell
