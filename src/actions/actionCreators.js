@@ -64,18 +64,16 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
       return(occupier.item === true)
     });
 
-    let item;
-    if (itemSquare.length !== 0) {
-      item = itemSquare[0].item;
-    }
-
     // if not occupied, allow character to move into that cell
     if (occupiedSquare.length === 0 && newYPosition >= 85) {
       let newCoordinates = { x: newXPosition, y: newYPosition }
       dispatch(adjustHeroCoordinates(hero, newCoordinates, lastMove));
     }
 
-    if (item) {
+    // if the next square has an inventory item,
+    // invoke hero celebration and also remove item from the object
+    // so it cannot be received multiple times
+    if (itemSquare.length !== 0) {
       dispatch(celebrateItem(itemSquare[0]));
     }
   }
