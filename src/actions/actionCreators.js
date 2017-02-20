@@ -11,10 +11,10 @@ export const heroStatus = (hero) => {
   }
 }
 
-export const celebrateItem = (item) => {
+export const celebrateItem = (itemHolder) => {
   return {
     type: 'CELEBRATE_ITEM',
-    item
+    itemHolder
   }
 }
 
@@ -67,7 +67,6 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
     let item;
     if (itemSquare.length !== 0) {
       item = itemSquare[0].item;
-      itemSquare[0].item = false;
     }
 
     // if not occupied, allow character to move into that cell
@@ -77,7 +76,7 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
     }
 
     if (item) {
-      dispatch(celebrateItem(item));
+      dispatch(celebrateItem(itemSquare[0]));
     }
   }
 };
