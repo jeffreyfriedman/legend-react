@@ -4,7 +4,8 @@ import {
   heroSpriteLeftArray,
   heroSpriteRightArray,
   heroSpriteUpArray,
-  heroSpriteDownArray
+  heroSpriteDownArray,
+  swordAttackArray1
 } from '../assets/images/sprites/link/animation.js';
 
 const defaultState = {
@@ -24,6 +25,7 @@ const defaultState = {
   weapons: {
     sword: false
   },
+  swingingSword: false,
   gotItem: false,
   lockUpgrade: false
 }
@@ -99,6 +101,30 @@ export const HeroReducer = (state = defaultState, action) => {
           }
           break;
 
+        case 'swordAttack':
+          if (state.weapons.sword) {
+            newState.swingingSword = true;
+            if (state.lastMove === 'down') {
+              newState.currentSprite = swordAttackArray1[0][0];
+            } else if (state.lastMove === 'up') {
+              newState.currentSprite = swordAttackArray1[1][0];
+            } else if (state.lastMove === 'left') {
+              newState.currentSprite = swordAttackArray1[2][0];
+            } else if (state.lastMove === 'right') {
+              newState.currentSprite = swordAttackArray1[3][0];
+            } else if (state.lastMove === 'swordAttack') {
+              let swingSpriteIndex = state.currentSpriteIndex;
+              if (swingSpriteIndex !== -1 && (swingSpriteIndex + 1) < swordAttackArray1[2].length) {
+                newState.currentSpriteIndex += 1;
+                newState.currentSprite = swordAttackArray1[2][swingSpriteIndex + 1];
+              } else {
+                newState.currentSpriteIndex = 0;
+                newState.currentSprite = swordAttackArray1[2][0];
+              }
+            }
+          }
+          break;
+
         default:
           break;
       }
@@ -112,11 +138,13 @@ export const HeroReducer = (state = defaultState, action) => {
         newState.weapons.sword = true;
         newState.currentSprite = heroSpriteDownArray[state.spriteArrayIndex][0];
       }
-      if (state.lastMove === 'up') newState.currentSprite = heroSpriteUpArray[state.spriteArrayIndex][0];
-      if (state.lastMove === 'down') newState.currentSprite = heroSpriteDownArray[state.spriteArrayIndex][0];
-      if (state.lastMove === 'left') newState.currentSprite = heroSpriteLeftArray[state.spriteArrayIndex][0];
-      if (state.lastMove === 'right') newState.currentSprite = heroSpriteRightArray[state.spriteArrayIndex][0];
-      newState.currentSpriteIndex = 0;
+      if (!state.swingingSword) {
+        if (state.lastMove === 'up') newState.currentSprite = heroSpriteUpArray[state.spriteArrayIndex][0];
+        if (state.lastMove === 'down') newState.currentSprite = heroSpriteDownArray[state.spriteArrayIndex][0];
+        if (state.lastMove === 'left') newState.currentSprite = heroSpriteLeftArray[state.spriteArrayIndex][0];
+        if (state.lastMove === 'right') newState.currentSprite = heroSpriteRightArray[state.spriteArrayIndex][0];
+        newState.currentSpriteIndex = 0;
+      }
       return newState;
 
     default:

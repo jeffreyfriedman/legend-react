@@ -53,6 +53,10 @@ export default class Game extends Component {
       lastMove = 'down';
     }
 
+    if (keyState[90]) {  // z
+      lastMove = 'swordAttack';
+    }
+
     this.props.moveCharacter(currentXPosition, currentYPosition, lastMove);
   }
 
