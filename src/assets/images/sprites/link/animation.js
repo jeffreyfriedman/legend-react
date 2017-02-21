@@ -64,6 +64,33 @@ import firstArmedHeroUp6 from './sprites_26.png';
 import firstArmedHeroUp7 from './sprites_27.png';
 import firstArmedHeroUp8 from './sprites_28.png';
 
+import firstSwordAttackDown1 from './Zelda3Sheet1_262.png';
+import firstSwordAttackDown2 from './Zelda3Sheet1_263.png';
+import firstSwordAttackDown3 from './Zelda3Sheet1_264.png';
+import firstSwordAttackDown4 from './Zelda3Sheet1_265.png';
+import firstSwordAttackDown5 from './Zelda3Sheet1_266.png';
+import firstSwordAttackDown6 from './Zelda3Sheet1_267.png';
+import firstSwordAttackUp1 from './Zelda3Sheet1_268.png';
+import firstSwordAttackUp2 from './Zelda3Sheet1_269.png';
+import firstSwordAttackUp3 from './Zelda3Sheet1_270.png';
+import firstSwordAttackUp4 from './Zelda3Sheet1_271.png';
+import firstSwordAttackUp5 from './Zelda3Sheet1_272.png';
+import firstSwordAttackUp6 from './Zelda3Sheet1_273.png';
+import firstSwordAttackLeft1 from './Zelda3Sheet1_274.png';
+import firstSwordAttackLeft2 from './Zelda3Sheet1_275.png';
+import firstSwordAttackLeft3 from './Zelda3Sheet1_276.png';
+import firstSwordAttackLeft4 from './Zelda3Sheet1_277.png';
+import firstSwordAttackLeft5 from './Zelda3Sheet1_278.png';
+import firstSwordAttackLeft6 from './Zelda3Sheet1_279.png';
+import firstSwordAttackLeft7 from './Zelda3Sheet1_280.png';
+import firstSwordAttackRight1 from './Zelda3Sheet1_281.png';
+import firstSwordAttackRight2 from './Zelda3Sheet1_282.png';
+import firstSwordAttackRight3 from './Zelda3Sheet1_283.png';
+import firstSwordAttackRight4 from './Zelda3Sheet1_284.png';
+import firstSwordAttackRight5 from './Zelda3Sheet1_285.png';
+import firstSwordAttackRight6 from './Zelda3Sheet1_286.png';
+import firstSwordAttackRight7 from './Zelda3Sheet1_287.png';
+
 export const heroSpriteLeftArray = [
   [
     unarmedHeroLeft0,
@@ -154,5 +181,42 @@ export const heroSpriteDownArray = [
     firstArmedHeroDown6,
     firstArmedHeroDown7,
     firstArmedHeroDown8
+  ]
+];
+
+export const swordAttackArray1 = [
+  [
+    firstSwordAttackDown1,
+    firstSwordAttackDown2,
+    firstSwordAttackDown3,
+    firstSwordAttackDown4,
+    firstSwordAttackDown5,
+    firstSwordAttackDown6
+  ],
+  [
+    firstSwordAttackUp1,
+    firstSwordAttackUp2,
+    firstSwordAttackUp3,
+    firstSwordAttackUp4,
+    firstSwordAttackUp5,
+    firstSwordAttackUp6
+  ],
+  [
+    firstSwordAttackLeft1,
+    firstSwordAttackLeft2,
+    firstSwordAttackLeft3,
+    firstSwordAttackLeft4,
+    firstSwordAttackLeft5,
+    firstSwordAttackLeft6,
+    firstSwordAttackLeft7
+  ],
+  [
+    firstSwordAttackRight1,
+    firstSwordAttackRight2,
+    firstSwordAttackRight3,
+    firstSwordAttackRight4,
+    firstSwordAttackRight5,
+    firstSwordAttackRight6,
+    firstSwordAttackRight7
   ]
 ];
