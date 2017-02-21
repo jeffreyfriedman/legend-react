@@ -13,6 +13,7 @@ export default class Game extends Component {
       intervalId: null
     }
     this.gameLoop = this.gameLoop.bind(this);
+    this.animate = this.animate.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +26,24 @@ export default class Game extends Component {
       keyState[e.keyCode || e.which] = false;
       this.props.resetSprite(this.props.hero);
     });
+
+    let intervalId = setInterval(this.animate, 100);
+    this.setState({intervalId: intervalId});
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.state.intervalId);
+  }
+
+  animate() {
+    if (this.props && this.props.hero.action.swingingSword) {
+      let currentXPosition = this.props.hero.coordinates.x;
+      let currentYPosition = this.props.hero.coordinates.y;
+      this.props.moveCharacter(currentXPosition, currentYPosition, 'swordAttack');
+    }
+    if (!this.props.hero.action.swingingSword && this.props.hero.lastMove === 'swordAttack') {
+      this.props.resetSprite(this.props.hero);
+    }
   }
 
   gameLoop() {
