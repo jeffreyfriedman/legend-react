@@ -116,7 +116,7 @@ export default class Game extends Component {
     }
 
     return (
-      <div>
+      <div className='game-viewport'>
         <StatusBar style={statusBarStyle}/>
         <img
           src={this.props.hero.currentSprite}

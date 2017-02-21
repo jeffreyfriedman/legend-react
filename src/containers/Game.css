@@ -51,3 +51,8 @@ th, td {
 .game {
   height: 6.82vh;
 }
+
+.game-viewport {
+  background-color: #00cc00;
+  height: 25rem;
+}
