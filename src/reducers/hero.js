@@ -19,6 +19,11 @@ const defaultState = {
   currentSprite: heroSpriteDownArray[0][0],
   currentSpriteIndex: 0,
   spriteArrayIndex: 0,
+  action: {
+    index: 0,
+    direction: '',
+    swingingSword: true
+  },
   stats: {
     health: 100
   },
@@ -38,7 +43,7 @@ const wait = (ms) => {
 }
 
 export const HeroReducer = (state = defaultState, action) => {
-  let newState = Object.assign({}, state);
+  let newState = {...state};
   switch (action.type) {
     case 'INITIALIZE_HERO':
       return action.hero
@@ -102,24 +107,27 @@ export const HeroReducer = (state = defaultState, action) => {
           break;
 
         case 'swordAttack':
+          if (state.lastMove !== 'swordAttack') {
+            newState.action.direction = state.lastMove;
+          }
+
           if (state.weapons.sword) {
-            newState.swingingSword = true;
-            if (state.lastMove === 'down') {
-              newState.currentSprite = swordAttackArray1[0][0];
-            } else if (state.lastMove === 'up') {
-              newState.currentSprite = swordAttackArray1[1][0];
-            } else if (state.lastMove === 'left') {
-              newState.currentSprite = swordAttackArray1[2][0];
-            } else if (state.lastMove === 'right') {
-              newState.currentSprite = swordAttackArray1[3][0];
-            } else if (state.lastMove === 'swordAttack') {
+            newState.action.swingingSword = true;
+
+            if (state.lastMove === 'swordAttack') {
+              let actionArray;
+              if (state.action.direction === 'down') actionArray = swordAttackArray1[0];
+              else if (state.action.direction === 'up') actionArray = swordAttackArray1[1];
+              else if (state.action.direction === 'left') actionArray = swordAttackArray1[2];
+              else if (state.action.direction === 'right') actionArray = swordAttackArray1[3];
+
               let swingSpriteIndex = state.currentSpriteIndex;
-              if (swingSpriteIndex !== -1 && (swingSpriteIndex + 1) < swordAttackArray1[2].length) {
+              if (swingSpriteIndex !== -1 && (swingSpriteIndex + 1) < actionArray.length) {
                 newState.currentSpriteIndex += 1;
-                newState.currentSprite = swordAttackArray1[2][swingSpriteIndex + 1];
+                newState.currentSprite = actionArray[swingSpriteIndex + 1];
               } else {
-                newState.currentSpriteIndex = 0;
-                newState.currentSprite = swordAttackArray1[2][0];
+                newState.action.swingingSword = false;
+                newState.lastMove = state.action.direction;
               }
             }
           }
@@ -138,7 +146,7 @@ export const HeroReducer = (state = defaultState, action) => {
         newState.weapons.sword = true;
         newState.currentSprite = heroSpriteDownArray[state.spriteArrayIndex][0];
       }
-      if (!state.swingingSword) {
+      if (!state.action.swingingSword) {
         if (state.lastMove === 'up') newState.currentSprite = heroSpriteUpArray[state.spriteArrayIndex][0];
         if (state.lastMove === 'down') newState.currentSprite = heroSpriteDownArray[state.spriteArrayIndex][0];
         if (state.lastMove === 'left') newState.currentSprite = heroSpriteLeftArray[state.spriteArrayIndex][0];
