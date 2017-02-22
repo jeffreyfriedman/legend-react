@@ -29,10 +29,7 @@ export const NpcReducer = (state = initializeNpcs(), action) => {
         changedNpc.item = false;
         let npcIndex = state.findIndex(npc => npc.id === action.itemHolder.id)
         return [...state.slice(0, npcIndex), changedNpc, ...state.slice(npcIndex + 1)]
-      } else {
-        return action.npcs;
-      }
-
+      } else return state;
 
     default:
       return state

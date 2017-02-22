@@ -29,7 +29,10 @@ const defaultState = {
     health: 100
   },
   weapons: {
-    sword: false
+    sword: {
+      possess: false,
+      damage: 10
+    }
   },
   gotItem: false,
   lockUpgrade: false
@@ -104,7 +107,7 @@ export const HeroReducer = (state = defaultState, action) => {
             newState.action.direction = state.lastMove;
           }
 
-          if (state.weapons.sword) {
+          if (state.weapons.sword.possess) {
             let actionArray;
             if (state.action.direction === 'down') actionArray = swordAttackArray1[0];
             else if (state.action.direction === 'up') actionArray = swordAttackArray1[1];
@@ -132,7 +135,7 @@ export const HeroReducer = (state = defaultState, action) => {
         helpers.wait(2000);
         newState.gotItem = false;
         newState.lockUpgrade = false;
-        newState.weapons.sword = true;
+        newState.weapons.sword.possess = true;
         newState.currentSprite = heroSpriteDownArray[state.spriteArrayIndex][0];
       }
       if (!state.action.swingingSword) {

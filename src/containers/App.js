@@ -34,7 +34,8 @@ const mapStateToProps = state => {
   return {
     hero: state.hero,
     obstacles: state.obstacles,
-    npcs: state.npcs
+    npcs: state.npcs,
+    enemies: state.enemies
   }
 }
 
