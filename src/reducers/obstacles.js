@@ -21,7 +21,16 @@ export const ObstaclesReducer = (state = initializeObstacles(), action) => {
     case 'INITIALIZE_OBSTACLES':
       return action.obstacles
 
+    case 'ADJUST_WORLD_COORDINATES':
+      let obstaclesArray = [...state];
+      let newObstaclesArray = obstaclesArray.map(obstacle => {
+        obstacle.coordinates.x += action.adjustment.x;
+        obstacle.coordinates.y += action.adjustment.y;
+        return obstacle;
+      });
+      return newObstaclesArray;
+
     default:
-      return state
+      return state;
   }
 }

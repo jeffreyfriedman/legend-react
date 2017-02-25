@@ -31,6 +31,15 @@ export const NpcReducer = (state = initializeNpcs(), action) => {
         return [...state.slice(0, npcIndex), changedNpc, ...state.slice(npcIndex + 1)]
       } else return state;
 
+    case 'ADJUST_WORLD_COORDINATES':
+      let npcsArray = [...state];
+      let newNpcsArray = npcsArray.map(npc => {
+        npc.coordinates.x += action.adjustment.x;
+        npc.coordinates.y += action.adjustment.y;
+        return npc;
+      });
+      return newNpcsArray;
+
     default:
       return state
   }

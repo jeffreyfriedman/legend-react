@@ -58,6 +58,15 @@ export const EnemyReducer = (state = initializeEnemies(), action) => {
       }
       return enemyArray;
 
+    case 'ADJUST_WORLD_COORDINATES':
+      let enemiesArray = [...state];
+      let newEnemiesArray = enemiesArray.map(enemy => {
+        enemy.coordinates.x += action.adjustment.x;
+        enemy.coordinates.y += action.adjustment.y;
+        return enemy;
+      });
+      return newEnemiesArray;
+
 
     default:
       return state
