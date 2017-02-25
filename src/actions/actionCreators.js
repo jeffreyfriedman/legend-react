@@ -86,26 +86,26 @@ const adjustWorldCoordinates = (adjustment) => {
   }
 }
 
-export const scrollLeft = () => {
+export const scrollLeft = (speed) => {
   return (dispatch, getState) => {
-    dispatch(adjustWorldCoordinates({ x: 1, y: 0 }));
+    dispatch(adjustWorldCoordinates({ x: speed, y: 0 }));
   }
 };
 
-export const scrollUp = () => {
+export const scrollUp = (speed) => {
   return (dispatch, getState) => {
-    dispatch(adjustWorldCoordinates({ x: 0, y: 1 }));
+    dispatch(adjustWorldCoordinates({ x: 0, y: speed }));
   }
 };
 
-export const scrollRight = () => {
+export const scrollRight = (speed) => {
   return (dispatch, getState) => {
-    dispatch(adjustWorldCoordinates({ x: -1, y: 0 }));
+    dispatch(adjustWorldCoordinates({ x: -speed, y: 0 }));
   }
 };
 
-export const scrollDown = () => {
+export const scrollDown = (speed) => {
   return (dispatch, getState) => {
-    dispatch(adjustWorldCoordinates({ x: 0, y: -1 }));
+    dispatch(adjustWorldCoordinates({ x: 0, y: -speed }));
   }
 };
