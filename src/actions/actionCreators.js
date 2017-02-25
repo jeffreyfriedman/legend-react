@@ -78,3 +78,34 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
     }
   }
 };
+
+const adjustWorldCoordinates = (adjustment) => {
+  return {
+    type: 'ADJUST_WORLD_COORDINATES',
+    adjustment
+  }
+}
+
+export const scrollLeft = () => {
+  return (dispatch, getState) => {
+    dispatch(adjustWorldCoordinates({ x: 1, y: 0 }));
+  }
+};
+
+export const scrollUp = () => {
+  return (dispatch, getState) => {
+    dispatch(adjustWorldCoordinates({ x: 0, y: 1 }));
+  }
+};
+
+export const scrollRight = () => {
+  return (dispatch, getState) => {
+    dispatch(adjustWorldCoordinates({ x: -1, y: 0 }));
+  }
+};
+
+export const scrollDown = () => {
+  return (dispatch, getState) => {
+    dispatch(adjustWorldCoordinates({ x: 0, y: -1 }));
+  }
+};

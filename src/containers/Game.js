@@ -4,27 +4,37 @@ import StatusBar from '../components/StatusBar';
 import Obstacle from '../components/Obstacle';
 import Enemy from '../components/Enemy';
 import Npc from '../components/Npc';
-let keyState = {};
 
 export default class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
       gameOver: false,
-      intervalId: null
+      intervalId: null,
+      keyState: {},
+      screenWidth: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+      screenHeight: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+      scrollMargin: 150
     }
     this.gameLoop = this.gameLoop.bind(this);
     this.animate = this.animate.bind(this);
   }
 
   componentDidMount() {
+    let newKeyState = {},
+        hashKey;
+
     window.addEventListener('keydown', (e) => {
-      keyState[e.keyCode || e.which] = true;
+      hashKey = e.keyCode || e.which;
+      newKeyState[hashKey] = true;
+      this.setState({ keyState: newKeyState });
       this.gameLoop();
     });
 
     window.addEventListener('keyup', (e) => {
-      keyState[e.keyCode || e.which] = false;
+      hashKey = e.keyCode || e.which;
+      newKeyState[hashKey] = false;
+      this.setState({ keyState: newKeyState });
       this.props.resetSprite(this.props.hero);
     });
 
@@ -53,31 +63,37 @@ export default class Game extends Component {
     let currentYPosition = this.props.hero.coordinates.y;
     let lastMove;
 
-    if (keyState[37] || keyState[65]) { // a
-      currentXPosition -= speed;
+    if (this.state.keyState[37] || this.state.keyState[65]) { // a - left
+      if (currentXPosition >= this.state.scrollMargin) currentXPosition -= speed;
       lastMove = 'left';
     }
 
-    if (keyState[39] || keyState[68]) { // d
-      currentXPosition += speed;
+    if (this.state.keyState[39] || this.state.keyState[68]) { // d - right
+      if (this.state.screenWidth - currentXPosition >= this.state.scrollMargin) currentXPosition += speed;
       lastMove = 'right';
     }
 
-    if (keyState[38] || keyState[87]) { // w
-      currentYPosition -= speed;
+    if (this.state.keyState[38] || this.state.keyState[87]) { // w - up
+      if (currentYPosition >= this.state.scrollMargin) currentYPosition -= speed;
       lastMove = 'up';
     }
 
-    if (keyState[40] || keyState[88]) { // x
-      currentYPosition += speed;
+    if (this.state.keyState[40] || this.state.keyState[88]) { // x - down
+      if (this.state.screenHeight - currentYPosition >= this.state.scrollMargin) currentYPosition += speed;
       lastMove = 'down';
     }
 
-    if (keyState[90]) {  // z
+    if (this.state.keyState[90]) {  // z
       lastMove = 'swordAttack';
     }
 
     this.props.moveCharacter(currentXPosition, currentYPosition, lastMove);
+
+    // 150 pixels from edge before scrolling
+    if (currentXPosition < this.state.scrollMargin && lastMove === 'left') this.props.scrollLeft();
+    if (this.state.screenWidth - currentXPosition < this.state.scrollMargin && lastMove === 'right') this.props.scrollRight();
+    if (currentYPosition < this.state.scrollMargin && lastMove === 'up') this.props.scrollUp();
+    if (this.state.screenHeight - currentYPosition < this.state.scrollMargin && lastMove === 'down') this.props.scrollDown();
   }
 
 
