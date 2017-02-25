@@ -39,7 +39,8 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
 
     let hero = getState().hero,
         obstacles = getState().obstacles,
-        npcs = getState().npcs;
+        npcs = getState().npcs,
+        enemies = getState().enemies;
 
     // get all of the obstacles that occupy the square the protagonist is moving into
     let obstacleSquare = obstacles.filter(obstacle => {
@@ -58,8 +59,17 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
           (newYPosition + hero.pixelsHeight >= npc.coordinates.y && newYPosition + 15 <= npc.coordinates.y + npc.pixelsHeight))
       );
     });
+    
+     // get all of the enemies that occupy the square the protagonist is moving into
+    let enemySquare = enemies.filter(enemy => {
+      return (
+        ((newXPosition + hero.pixelsWidth >= enemy.coordinates.x &&
+          newXPosition <= enemy.coordinates.x + enemy.pixelsWidth) &&
+          (newYPosition + hero.pixelsHeight >= enemy.coordinates.y && newYPosition + 15 <= enemy.coordinates.y + enemy.pixelsHeight))
+      );
+    });
 
-    let occupiedSquare = [...obstacleSquare, ...npcSquare];
+    let occupiedSquare = [...obstacleSquare, ...npcSquare, ...enemySquare];
     let itemSquare = occupiedSquare.filter(occupier => {
       return(occupier.item === true)
     });
