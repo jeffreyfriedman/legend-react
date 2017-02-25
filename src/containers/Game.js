@@ -90,10 +90,10 @@ export default class Game extends Component {
     this.props.moveCharacter(currentXPosition, currentYPosition, lastMove);
 
     // 150 pixels from edge before scrolling
-    if (currentXPosition < this.state.scrollMargin && lastMove === 'left') this.props.scrollLeft();
-    if (this.state.screenWidth - currentXPosition < this.state.scrollMargin && lastMove === 'right') this.props.scrollRight();
-    if (currentYPosition < this.state.scrollMargin && lastMove === 'up') this.props.scrollUp();
-    if (this.state.screenHeight - currentYPosition < this.state.scrollMargin && lastMove === 'down') this.props.scrollDown();
+    if (currentXPosition < this.state.scrollMargin && lastMove === 'left') this.props.scrollLeft(speed);
+    if (this.state.screenWidth - currentXPosition < this.state.scrollMargin && lastMove === 'right') this.props.scrollRightspeed();
+    if (currentYPosition < this.state.scrollMargin && lastMove === 'up') this.props.scrollUp(speed);
+    if (this.state.screenHeight - currentYPosition < this.state.scrollMargin && lastMove === 'down') this.props.scrollDown(speed);
   }
 
 
