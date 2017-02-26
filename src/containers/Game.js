@@ -85,17 +85,15 @@ export default class Game extends Component {
 
     if (this.state.keyState[90]) {  // z
       lastMove = 'swordAttack';
+    }
+      
+    this.props.moveCharacter(currentXPosition, currentYPosition, lastMove);
       
     // 150 pixels from edge before scrolling
     if (currentXPosition < this.state.scrollMargin && lastMove === 'left') this.props.scrollLeft(speed);
     if (this.state.screenWidth - currentXPosition < this.state.scrollMargin && lastMove === 'right') this.props.scrollRight(speed);
     if (currentYPosition < this.state.scrollMargin && lastMove === 'up') this.props.scrollUp(speed);
     if (this.state.screenHeight - currentYPosition < this.state.scrollMargin && lastMove === 'down') this.props.scrollDown(speed);
-    }
-    
-    this.props.moveCharacter(currentXPosition, currentYPosition, lastMove);
-
-    
   }
 
 
