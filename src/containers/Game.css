@@ -23,20 +23,6 @@
   to { transform: rotate(360deg); }
 }
 
-li {
-  /*display: inline;*/
-}
-
-table{
-  table-layout: fixed;
-  width: 1000px;
-}
-
-th, td {
-  border: 1px solid transparent;
-  width: 100px;
-}
-
 .stats {
   border: 1px solid black;
 }
@@ -54,5 +40,5 @@ th, td {
 
 .game-viewport {
   background-color: #00cc00;
-  height: 25rem;
+  height: 40rem;
 }
