@@ -34,7 +34,7 @@ export const resetSprite = (hero) => {
   }
 }
 
-export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
+export const moveCharacter = (newXPosition, newYPosition, lastMove, speed, scrollMargin, screenWidth, screenHeight) => {
   return (dispatch, getState) => {
 
     let hero = getState().hero,
@@ -78,6 +78,12 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
     if (occupiedSquare.length === 0 && newYPosition >= 85) {
       let newCoordinates = { x: newXPosition, y: newYPosition }
       dispatch(adjustHeroCoordinates(hero, newCoordinates, lastMove));
+      
+      // 150 pixels from edge before scrolling
+      if (newXPosition < scrollMargin && lastMove === 'left') dispatch(scrollLeft(speed));
+      if (screenWidth - newXPosition < scrollMargin && lastMove === 'right') dispatch(scrollRight(speed));
+      if (newYPosition < scrollMargin && lastMove === 'up') dispatch(scrollUp(speed));
+      if (screenHeight - newYPosition < scrollMargin && lastMove === 'down') dispatch(scrollDown(speed));
     }
 
     // if the next square has an inventory item,
