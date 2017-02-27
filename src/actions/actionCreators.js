@@ -3,20 +3,20 @@ export const initializeHero = (hero) => {
     type: 'INITIALIZE_HERO',
     hero
   }
-}
+};
 
 export const heroStatus = (hero) => {
   return (dispatch, getState) => {
     dispatch(initializeHero(getState().hero));
   }
-}
+};
 
 export const celebrateItem = (itemHolder) => {
   return {
     type: 'CELEBRATE_ITEM',
     itemHolder
   }
-}
+};
 
 export const adjustHeroCoordinates = (hero, newCoordinates, lastMove) => {
   return {
@@ -25,16 +25,44 @@ export const adjustHeroCoordinates = (hero, newCoordinates, lastMove) => {
     newCoordinates,
     lastMove
   }
-}
+};
 
 export const resetSprite = (hero) => {
   return {
       type: 'RESET_HERO_SPRITE',
       hero
   }
+};
+
+const adjustWorldCoordinates = (adjustment) => {
+  return {
+    type: 'ADJUST_WORLD_COORDINATES',
+    adjustment
+  }
 }
 
-export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
+export const scrollDirection = (direction, speed) => {
+  return (dispatch, getState) => {
+    switch (direction) {
+      case 'left':
+        dispatch(adjustWorldCoordinates({ x: speed, y: 0 }));
+        break;
+      case 'up':
+        dispatch(adjustWorldCoordinates({ x: 0, y: speed }));
+        break;
+      case 'right':
+        dispatch(adjustWorldCoordinates({ x: -speed, y: 0 }));
+        break;
+      case 'down':
+        dispatch(adjustWorldCoordinates({ x: 0, y: -speed }));
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+export const moveCharacter = (newXPosition, newYPosition, lastMove, speed, scrollMargin, screenWidth, screenHeight) => {
   return (dispatch, getState) => {
 
     let hero = getState().hero,
@@ -59,7 +87,7 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
           (newYPosition + hero.pixelsHeight >= npc.coordinates.y && newYPosition + 15 <= npc.coordinates.y + npc.pixelsHeight))
       );
     });
-    
+
      // get all of the enemies that occupy the square the protagonist is moving into
     let enemySquare = enemies.filter(enemy => {
       return (
@@ -78,6 +106,12 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
     if (occupiedSquare.length === 0 && newYPosition >= 85) {
       let newCoordinates = { x: newXPosition, y: newYPosition }
       dispatch(adjustHeroCoordinates(hero, newCoordinates, lastMove));
+
+      // 150 pixels from edge before scrolling
+      if (newXPosition < scrollMargin && lastMove === 'left') dispatch(scrollDirection(lastMove, speed));
+      if (screenWidth - newXPosition < scrollMargin && lastMove === 'right') dispatch(scrollDirection(lastMove, speed));
+      if (newYPosition < scrollMargin && lastMove === 'up') dispatch(scrollDirection(lastMove, speed));
+      if (screenHeight - newYPosition < scrollMargin && lastMove === 'down') dispatch(scrollDirection(lastMove, speed));
     }
 
     // if the next square has an inventory item,
@@ -86,36 +120,5 @@ export const moveCharacter = (newXPosition, newYPosition, lastMove) => {
     if (itemSquare.length !== 0) {
       dispatch(celebrateItem(itemSquare[0]));
     }
-  }
-};
-
-const adjustWorldCoordinates = (adjustment) => {
-  return {
-    type: 'ADJUST_WORLD_COORDINATES',
-    adjustment
-  }
-}
-
-export const scrollLeft = (speed) => {
-  return (dispatch, getState) => {
-    dispatch(adjustWorldCoordinates({ x: speed, y: 0 }));
-  }
-};
-
-export const scrollUp = (speed) => {
-  return (dispatch, getState) => {
-    dispatch(adjustWorldCoordinates({ x: 0, y: speed }));
-  }
-};
-
-export const scrollRight = (speed) => {
-  return (dispatch, getState) => {
-    dispatch(adjustWorldCoordinates({ x: -speed, y: 0 }));
-  }
-};
-
-export const scrollDown = (speed) => {
-  return (dispatch, getState) => {
-    dispatch(adjustWorldCoordinates({ x: 0, y: -speed }));
   }
 };
