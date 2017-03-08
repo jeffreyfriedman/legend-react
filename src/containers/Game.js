@@ -150,10 +150,10 @@ export default class Game extends Component {
         simulateUp = () => this.simulateKeyPress('ArrowUp'),
         simulateRight = () => this.simulateKeyPress('ArrowRight'),
         simulateDown = () => this.simulateKeyPress('ArrowDown'),
-        stopLeft = () => this.simulateKeyPress('ArrowLeft'),
-        stopUp = () => this.simulateKeyPress('ArrowUp'),
-        stopRight = () => this.simulateKeyPress('ArrowRight'),
-        stopDown = () => this.simulateKeyPress('ArrowDown');
+        stopLeft = () => this.stopKeyPress('ArrowLeft'),
+        stopUp = () => this.stopKeyPress('ArrowUp'),
+        stopRight = () => this.stopKeyPress('ArrowRight'),
+        stopDown = () => this.stopKeyPress('ArrowDown');
 
     return (
       <div className='game-viewport'>
