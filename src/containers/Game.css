@@ -36,9 +36,15 @@
 
 .game {
   height: 6.82vh;
+  position: relative;
 }
 
 .game-viewport {
   background-color: #00cc00;
-  height: 40rem;
+  height: 30rem;
+}
+
+.mobile-controls {
+  position: absolute;
+  bottom: 0;
 }

@@ -4,6 +4,7 @@ import StatusBar from '../components/StatusBar';
 import Obstacle from '../components/Obstacle';
 import Enemy from '../components/Enemy';
 import Npc from '../components/Npc';
+import MobileControls from '../components/MobileControls';
 
 export default class Game extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ export default class Game extends Component {
     }
     this.gameLoop = this.gameLoop.bind(this);
     this.animate = this.animate.bind(this);
+    this.simulateKeyPress = this.simulateKeyPress.bind(this);
   }
 
   componentDidMount() {
@@ -25,14 +27,14 @@ export default class Game extends Component {
         hashKey;
 
     window.addEventListener('keydown', (e) => {
-      hashKey = e.keyCode || e.which;
+      hashKey = e.key || e.code;
       newKeyState[hashKey] = true;
       this.setState({ keyState: newKeyState });
       this.gameLoop();
     });
 
     window.addEventListener('keyup', (e) => {
-      hashKey = e.keyCode || e.which;
+      hashKey = e.key || e.code;
       newKeyState[hashKey] = false;
       this.setState({ keyState: newKeyState });
       this.props.resetSprite(this.props.hero);
@@ -40,6 +42,16 @@ export default class Game extends Component {
 
     let intervalId = setInterval(this.animate, 100);
     this.setState({intervalId: intervalId});
+  }
+
+  simulateKeyPress(keyCode) {
+    let keyPress = new KeyboardEvent('keydown', { code : keyCode });
+    window.dispatchEvent(keyPress);
+  }
+
+  stopKeyPress(keyCode) {
+    let keyPress = new KeyboardEvent('keyup', { code : keyCode });
+    window.dispatchEvent(keyPress);
   }
 
   componentWillUnMount() {
@@ -63,22 +75,22 @@ export default class Game extends Component {
     let currentYPosition = this.props.hero.coordinates.y;
     let lastMove;
 
-    if (this.state.keyState[37] || this.state.keyState[65]) { // a - left
+    if (this.state.keyState['ArrowLeft'] || this.state.keyState['KeyA'] || this.state.keyState['a']) { // a - left
       if (currentXPosition >= this.state.scrollMargin) currentXPosition -= speed;
       lastMove = 'left';
     }
 
-    if (this.state.keyState[39] || this.state.keyState[68]) { // d - right
+    if (this.state.keyState['ArrowRight'] || this.state.keyState['KeyD'] || this.state.keyState['d']) { // d - right
       if (this.state.screenWidth - currentXPosition >= this.state.scrollMargin) currentXPosition += speed;
       lastMove = 'right';
     }
 
-    if (this.state.keyState[38] || this.state.keyState[87]) { // w - up
+    if (this.state.keyState['ArrowUp'] || this.state.keyState['KeyW'] || this.state.keyState['w']) { // w - up
       if (currentYPosition >= this.state.scrollMargin) currentYPosition -= speed;
       lastMove = 'up';
     }
 
-    if (this.state.keyState[40] || this.state.keyState[88]) { // x - down
+    if (this.state.keyState['ArrowDown'] || this.state.keyState['KeyX'] || this.state.keyState['x']) { // x - down
       if (this.state.screenHeight - currentYPosition >= this.state.scrollMargin) currentYPosition += speed;
       lastMove = 'down';
     }
@@ -134,6 +146,15 @@ export default class Game extends Component {
       top: 10
     }
 
+    let simulateLeft = () => this.simulateKeyPress('ArrowLeft'),
+        simulateUp = () => this.simulateKeyPress('ArrowUp'),
+        simulateRight = () => this.simulateKeyPress('ArrowRight'),
+        simulateDown = () => this.simulateKeyPress('ArrowDown'),
+        stopLeft = () => this.simulateKeyPress('ArrowLeft'),
+        stopUp = () => this.simulateKeyPress('ArrowUp'),
+        stopRight = () => this.simulateKeyPress('ArrowRight'),
+        stopDown = () => this.simulateKeyPress('ArrowDown');
+
     return (
       <div className='game-viewport'>
         <StatusBar style={statusBarStyle}/>
@@ -146,6 +167,16 @@ export default class Game extends Component {
         {obstacles}
         {enemies}
         {npcs}
+        <MobileControls
+          simulateLeft={simulateLeft}
+          simulateRight={simulateRight}
+          simulateUp={simulateUp}
+          simulateDown={simulateDown}
+          stopUp={stopUp}
+          stopRight={stopRight}
+          stopDown={stopDown}
+          stopLeft={stopLeft}
+        />
       </div>
     );
   }
