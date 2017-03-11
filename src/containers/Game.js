@@ -95,7 +95,7 @@ export default class Game extends Component {
       lastMove = 'down';
     }
 
-    if (this.state.keyState[90]) {  // z
+    if (this.state.keyState['KeyZ] || || this.state.keyState['z']) {  // z
       lastMove = 'swordAttack';
     }
 
